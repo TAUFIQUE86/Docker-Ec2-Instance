@@ -1,1 +1,45 @@
-This is ec2 instance
+[200~Gemini said
+Based on your terminal logs, you've successfully installed Docker on Amazon Linux 2023, authenticated with GitHub, and pulled a Spring Boot image. Here is a curated "cheat sheet" of the Docker commands you just used (and the ones you'll need next) for your revision.
+
+1. Service & Permissions (Setup)
+sudo yum install docker -y: Installs the Docker engine.
+
+sudo service docker start: Starts the Docker daemon.
+
+sudo usermod -aG docker ec2-user: Adds your user to the docker group (allows running commands without sudo).
+
+docker -v: Checks the installed version.
+
+2. Working with Images
+docker pull <image_name>: Downloads an image from Docker Hub (e.g., docker pull hello-world).
+
+docker images or docker image ls: Lists all images stored locally on your EC2.
+
+docker rmi <image_id>: Removes a specific image.
+
+docker image prune: Deletes unused/dangling images.
+
+3. Working with Containers (The Lifecycle)
+docker run <image_name>: Creates and starts a container (foreground).
+
+docker run -d -p 8080:8080 <image_name>: Runs a container in detached mode (background) and maps host port 8080 to container port 8080.
+
+docker ps: Lists only running containers.
+
+docker ps -a: Lists all containers (including stopped/exited ones).
+
+docker stop <container_id>: Gracefully stops a running container.
+
+docker rm <container_id>: Deletes a stopped container.
+
+4. Inspection & Debugging
+docker logs <container_id>: Shows the console output (Spring Boot logs, etc.).
+
+docker exec -it <container_id> bash: "Enters" a running container to explore its file system.
+
+docker inspect <container_id>: Provides detailed JSON configuration of a container.
+
+5. Cleanup (Essential for Small EC2s)
+docker system prune: Removes all stopped containers and unused networks.
+
+docker system prune -a: (What you used) Removes all stopped containers and all unused images. Use with caution!
